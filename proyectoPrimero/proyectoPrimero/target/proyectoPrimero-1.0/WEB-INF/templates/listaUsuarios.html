@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de Usuarios</title>
+</head>
+<body>
+ <h1>Lista de usuarios</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr th:each="usuario : ${usuarios}">
+              <td th:text="${usuario.nombreUsuario}"></td>
+              <td>
+                  <a th:href="@{'/detalleUsuario/' + ${usuario.nombreUsuario}}">Ver detalle</a>
+              </td> 
+          </tr>
+        </tbody>
+    </table>
+</body>
+</html>

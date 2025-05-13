@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Usuario</title>
+</head>
+<body>
+    <h1>Detalle del Usuario</h1>
+
+    <p><strong>Nombre:</strong> <span th:text="${usuario.nombreUsuario}"></span></p>
+    <p><strong>Clave:</strong> <span th:text="${usuario.clave}"></span></p>
+    <p><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></p>
+
+    <a th:href="@{/listarUsuarios}">Volver a la lista</a>
+</body>
+</html>
