@@ -5,14 +5,14 @@
          version="4.0">
 
     <servlet>
-        <servlet-name>MiServlet</servlet-name>
-        <servlet-class>dam.primero.servlet.MiServlet</servlet-class>
+        <servlet-name>PuntuacionServlet</servlet-name>
+        <servlet-class>dam.primero.servlet.PuntuacionServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>MiServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <servlet-name>PuntuacionServlet</servlet-name>
+        <url-pattern>/puntuacion</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: url('../IMG/fondo1.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  header {
+    background: #8cc0d7;
+    padding: 20px;
+    display: flex;
+    align-items: center; 
+    gap: 20px;           
+  }
+  
+  #logo {
+    height: 70px;
+  }
+  
+  #titulo {
+    margin: 0;           
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    flex-grow: 1;       
+    text-align: center; 
+  }
+  
+  #botones {
+    display: flex;
+    gap: 10px;          
+  }
+  
+  button, #grupo {
+    padding: 10px 20px;
+    border: 2px solid #1693a5;
+    background: white;
+    color: #1693a5;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  button:hover, #grupo:hover {
+    background: #1693a5;
+    color: white;
+  }
+  
+  #contenido {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+  
+  .tarjeta {
+    width: 360px;
+    height: 430px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid #1693a5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .boton-tarjeta {
+    width: 100%;
+    padding: 15px;
+    background: #1693a5;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #117988;
+    cursor: pointer;
+  }
+  
+  .boton-tarjeta:hover {
+    background: #117988;
+  }
+  
+  #formulario {
+    width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    border: 2px solid #0074D9;
+    background: rgba(255, 255, 255, 0.3);
+    text-align: center;
+  }
+  
+  #formulario h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  select, input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    margin: 10px 0;
+  }
