@@ -18,6 +18,7 @@
     <url-pattern>/listado/*</url-pattern>
     <url-pattern>/modificar/*</url-pattern>
     <url-pattern>/registrar-participante/*</url-pattern>
+    <url-pattern>/procesar-prueba</url-pattern>
 </servlet-mapping>
 
 

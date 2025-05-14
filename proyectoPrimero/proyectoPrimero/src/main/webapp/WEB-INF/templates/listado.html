@@ -41,19 +41,26 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID Participante</th>
+                    <th>Participante</th>
                     <th>Equipo</th>
+                    <th>Prueba</th>
                     <th>Puntuación</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="p : ${puntuacion}">
-                    <td th:text="${p.participanteId}">Nombre</td>
-                    <td th:text="${p.nombreEquipo}">Equipo</td>
+                <tr th:each="p : ${puntuaciones}">
+                    <td th:text="${p.nombreParticipante}"></td>
+                    <td th:text="${p.nombreEquipo}"></td>
+                    <td th:text="${p.nombrePrueba}"></td>
                     <td th:text="${p.puntuacion}"></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Mensaje si no hay puntuaciones -->
+    <div th:if="${#lists.isEmpty(puntuaciones)}">
+        <p>No se encontraron puntuaciones para la prueba indicada.</p>
     </div>
 </div>
 
