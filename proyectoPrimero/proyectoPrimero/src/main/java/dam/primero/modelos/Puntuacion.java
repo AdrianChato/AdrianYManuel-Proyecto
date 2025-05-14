@@ -5,6 +5,8 @@ public class Puntuacion {
 	private int participanteId;
 	private int pruebaId;
 	private double puntuacion;
+	private String nombreEquipo;
+	private String nombreParticipante;
 
 	public Puntuacion(int participanteId, int pruebaId, double puntuacion) {
 		this.participanteId = participanteId;
@@ -34,5 +36,20 @@ public class Puntuacion {
 
 	public void setPuntuacion(double puntuacion) {
 		this.puntuacion = puntuacion;
+	}
+
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
+	}
+	public String getNombreParticipante() {
+	    return nombreParticipante;
+	}
+
+	public void setNombreParticipante(String nombreParticipante) {
+	    this.nombreParticipante = nombreParticipante;
 	}
 }

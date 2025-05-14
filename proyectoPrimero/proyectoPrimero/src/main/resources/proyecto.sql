@@ -1,4 +1,3 @@
-
 DROP DATABASE IF EXISTS Proyecto;
 CREATE DATABASE Proyecto;
 USE Proyecto;
@@ -29,7 +28,7 @@ CREATE TABLE Prueba (
 );
 
 
-CREATE TABLE Participante_Prueba (
+CREATE TABLE Puntuacion (
     ID_Participante INT,
     ID_Prueba INT,
     Puntuacion DECIMAL(4,2) CHECK (Puntuacion BETWEEN 0 AND 10),
@@ -53,7 +52,7 @@ INSERT INTO Participante VALUES (6, 'Jorge', 'Navas', 26, 2);
 INSERT INTO Prueba VALUES (100, 'Salto', 'Medición de salto', '2025-06-01', 'MAXIMO');
 INSERT INTO Prueba VALUES (200, '100m lisos', 'Tiempo en 100m', '2025-06-01', 'MAXIMO');
 
-INSERT INTO Participante_Prueba VALUES 
+INSERT INTO Puntuacion VALUES 
 (1, 100, 6.5),
 (2, 100, 6.8),
 (3, 100, 6.2),

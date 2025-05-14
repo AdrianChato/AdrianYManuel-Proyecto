@@ -1,136 +1,143 @@
 package dam.primero.servlet;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-
 import dam.primero.dao.PuntuacionDAO;
 import dam.primero.modelos.Puntuacion;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
+import org.thymeleaf.web.servlet.IServletWebExchange;
+import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 public class PuntuacionServlet extends HttpServlet {
 
-    private PuntuacionDAO dao;
+    private TemplateEngine templateEngine;
 
     @Override
-    public void init() throws ServletException {
-        try {
-            dao = new PuntuacionDAO();
-        } catch (Exception e) {
-            throw new ServletException("Error al inicializar DAO", e);
-        }
-    }
+	public void init() throws ServletException {
+		System.out.println("En init");
+		ServletContext servletContext = getServletContext();
+		JavaxServletWebApplication application = JavaxServletWebApplication.buildApplication(servletContext);
+		WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
+		templateResolver.setPrefix("/WEB-INF/templates/");
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode(TemplateMode.HTML);
+		templateEngine = new TemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver);
+
+	}
+
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String accion = req.getParameter("action");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        if (accion == null) {
-            resp.setContentType("text/plain");
-            resp.getWriter().println("⚠️ Parámetro 'action' requerido. Usa ?action=listar o ?action=detalle");
-            return;
-        }
+    	System.out.println("En get");
 
-        switch (accion.toLowerCase()) {
-            case "detalle":
-                verDetalle(req, resp);
-                break;
-            case "listar":
-                listar(req, resp);
-                break;
-            default:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción GET no válida: " + accion);
-        }
-    }
+		ServletContext servletContext = getServletContext();
+		JavaxServletWebApplication application = JavaxServletWebApplication.buildApplication(servletContext);
+		IServletWebExchange webExchange = application.buildExchange(request, response);
+		WebContext context = new WebContext(webExchange, request.getLocale());
+		response.setContentType("text/html;charset=UTF-8");
+		
+      System.out.println();
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String accion = req.getParameter("action");
+        String pathInfo = request.getServletPath(); // devuelve /principal, /buscar, etc.
+        System.out.println("Path info: " + pathInfo);
 
-        if (accion == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parámetro 'action' requerido.");
-            return;
-        }
+        if (pathInfo == null || pathInfo.equals("/") || pathInfo.equalsIgnoreCase("/principal")) {
+            templateEngine.process("principal", context, response.getWriter());
 
-        switch (accion.toLowerCase()) {
-            case "registrar":
-                registrar(req, resp);
-                break;
-            case "actualizar":
-                actualizar(req, resp);
-                break;
-            default:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción POST no válida: " + accion);
-        }
-    }
+        } else if (pathInfo.equalsIgnoreCase("/listado")) {
+            templateEngine.process("listado", context, response.getWriter());
 
-    private void registrar(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            int idParticipante = Integer.parseInt(req.getParameter("idParticipante"));
-            int idPrueba = Integer.parseInt(req.getParameter("idPrueba"));
-            double puntuacion = Double.parseDouble(req.getParameter("puntuacion"));
+        } else if (pathInfo.equalsIgnoreCase("/modificar")) {
+            templateEngine.process("modificar", context, response.getWriter());
 
-            Puntuacion p = new Puntuacion(idParticipante, idPrueba, puntuacion);
-            dao.registrarPuntuacion(p);
+        } else if (pathInfo.equalsIgnoreCase("/registrar-participante")) {
+            templateEngine.process("registrar-participante", context, response.getWriter());
 
-            resp.getWriter().println("✅ Puntuación registrada correctamente.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.sendError(500, "❌ Error al registrar puntuación.");
-        }
-    }
+        } else if (pathInfo.equalsIgnoreCase("/buscar")) {
+            // Procesar búsqueda
+            try {
+                String idParam = request.getParameter("idPrueba");
+                String filtro = request.getParameter("filtro");
 
-    private void actualizar(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            int idParticipante = Integer.parseInt(req.getParameter("idParticipante"));
-            int idPrueba = Integer.parseInt(req.getParameter("idPrueba"));
-            double nuevaPuntuacion = Double.parseDouble(req.getParameter("puntuacion"));
+                if (idParam == null || idParam.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro idPrueba");
+                    return;
+                }
 
-            Puntuacion p = new Puntuacion(idParticipante, idPrueba, nuevaPuntuacion);
-            dao.actualizarPuntuacion(p);
+                int idPrueba = Integer.parseInt(idParam);
+                PuntuacionDAO dao = new PuntuacionDAO();
+                List<Puntuacion> puntuaciones = dao.listarPuntuacionesPorPrueba(idPrueba, filtro);
 
-            resp.getWriter().println("✅ Puntuación actualizada correctamente.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.sendError(500, "❌ Error al actualizar puntuación.");
-        }
-    }
+                context.setVariable("puntuaciones", puntuaciones);
+                templateEngine.process("listado", context, response.getWriter());
 
-    private void verDetalle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            int idParticipante = Integer.parseInt(req.getParameter("idParticipante"));
-            int idPrueba = Integer.parseInt(req.getParameter("idPrueba"));
-
-            Puntuacion p = dao.obtenerPuntuacion(idParticipante, idPrueba);
-
-            if (p != null) {
-                resp.getWriter().println("📋 Detalle → Participante: " + p.getParticipanteId() +
-                        " | Prueba: " + p.getPruebaId() +
-                        " | Puntuación: " + p.getPuntuacion());
-            } else {
-                resp.getWriter().println("⚠️ No se encontró puntuación.");
+            } catch (SQLException | NumberFormatException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al buscar puntuaciones.");
+            } catch (Exception e) {
+                throw new ServletException("Error inicializando el DAO", e);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.sendError(500, "❌ Error al obtener detalle.");
+
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Ruta no válida: " + pathInfo);
         }
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String path = request.getServletPath();
+		String pathInfo = request.getPathInfo(); // Ejemplo: /listarUsuarios o null
+		System.out.println(pathInfo);
+		ServletContext servletContext = getServletContext();
+		JavaxServletWebApplication application = JavaxServletWebApplication.buildApplication(servletContext);
+		IServletWebExchange webExchange = application.buildExchange(request, response);
+		WebContext context = new WebContext(webExchange, request.getLocale());
 
-    private void listar(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            int idPrueba = Integer.parseInt(req.getParameter("idPrueba"));
-            String mejor = req.getParameter("mejor"); // puede ser null, "MAXIMO" o "MINIMO"
+		switch (pathInfo) {
+		case "/procesar-prueba":
+			// Lógica para listar usuarios
+			boolean correcto = altaPrueba(request, response, context);
+			if (correcto) {
+				context.setVariable("error", false);
+				templateEngine.process("index", context, response.getWriter());
+			} else {
+				context.setVariable("error", true);
+				templateEngine.process("login", context, response.getWriter());
 
-            List<Puntuacion> lista = dao.listarPuntuacionesPorPrueba(idPrueba, mejor);
+			}
+			break;
+		default:
+			// Ruta no reconocida
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Ruta no válida: " + path);
+		}
+	}
+	List[] altaPrueba(HttpServletRequest request, HttpServletResponse response, WebContext context)
+			throws ServletException, IOException {
 
-            for (Puntuacion p : lista) {
-                resp.getWriter().println("👤 Participante: " + p.getParticipanteId() +
-                        " | Puntuación: " + p.getPuntuacion());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.sendError(500, "❌ Error al listar puntuaciones.");
-        }
-    }
+		String usuario = request.getParameter("puntuaciones");
+		String clave = request.getParameter("listado");
+		Puntuacion p = new Puntuacion(0, 0, 0);
+		List correcto [];
+
+		try {
+			PuntuacionDAO dao = new PuntuacionDAO();
+			correcto = dao.registrarPuntuacion(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return correcto;
+	}
 }

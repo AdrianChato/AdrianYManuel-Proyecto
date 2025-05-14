@@ -1,52 +1,53 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Añadir Prueba - Competición Deportiva</title>
-    <link rel="stylesheet" href="../principal.css">
-    <link rel="stylesheet" href="../registrar.css">
+    <link rel="stylesheet" th:href="@{/css/principal.css}">
+    <link rel="stylesheet" th:href="@{/css/registrar.css}">
 </head>
 <body>
     <header>
         <a href="https://blogsaverroes.juntadeandalucia.es/iestorrredelosguzmanes/" target="_blank">
-            <img id="logo" src="../Diseño-sin-título.png" alt="Logo">
+            <img id="logo" th:src="@{/img/Diseño-sin-título.png}" alt="Logo">
         </a>
         <h1 id="titulo">COMPETICIÓN DEPORTIVA</h1>
         <div id="botones">
-            <a href="./principal.html"><button type="button">Inicio</button></a>
+            <a th:href="@{/principal}"><button type="button">Inicio</button></a>
             <button type="button" onclick="window.history.back()">Atrás</button>        
         </div>
     </header>
 
     <div id="formulario-anadir">
-        <h1>Registrar Puntuacion</h1>
+        <h1>Registrar Puntuación</h1>
         
+        <form th:action="@{/procesar-prueba}" method="post">
             <div class="campos-formulario">
 
                 <div class="campo">
-                    <label for="nombre">Nombre del Participante*</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                    <label for="nombreParticipante">Nombre del Participante*</label>
+                    <input type="text" id="nombreParticipante" name="nombreParticipante" required>
                 </div>
                 
                 <div class="campo">
-                    <label for="unidad">Fecha de Nacimiento*</label>
-                    <input type="date" id="unidad" name="unidad" required>
+                    <label for="fechaNacimiento">Fecha de Nacimiento*</label>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
                 </div>
 
                 <div class="campo">
-                    <label for="nombre">Correo Electronico*</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                    <label for="correo">Correo Electrónico*</label>
+                    <input type="email" id="correo" name="correo" required>
                 </div>
 
                 <div class="campo">
-                    <label for="nombre">Nombre de la Prueba*</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                    <label for="nombrePrueba">Nombre de la Prueba*</label>
+                    <input type="text" id="nombrePrueba" name="nombrePrueba" required>
                 </div>
 
                 <div class="campo">
-                    <label for="nombre">Puntuacion Obtenida*</label>
-                    <input type="number" id="nombre" name="nombre" required>
+                    <label for="puntuacion">Puntuación Obtenida*</label>
+                    <input type="number" id="puntuacion" name="puntuacion" required>
                 </div>
 
             <div class="boton-central">
