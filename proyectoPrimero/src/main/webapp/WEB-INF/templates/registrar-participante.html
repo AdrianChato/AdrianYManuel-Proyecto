@@ -23,38 +23,35 @@
         <h1>Registrar Puntuación</h1>
         
         <form th:action="@{/procesar-prueba}" method="post">
-            <div class="campos-formulario">
+    <div class="campos-formulario">
 
-                <div class="campo">
-                    <label for="nombreParticipante">Nombre del Participante*</label>
-                    <input type="text" id="nombreParticipante" name="nombreParticipante" required>
-                </div>
-                
-                <div class="campo">
-                    <label for="fechaNacimiento">Fecha de Nacimiento*</label>
-                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
-                </div>
+        <div class="campo">
+            <label for="participante">Nombre del Participante*</label>
+            <input type="text" id="participante" name="participante" required>
+        </div>
 
-                <div class="campo">
-                    <label for="correo">Correo Electrónico*</label>
-                    <input type="email" id="correo" name="correo" required>
-                </div>
+        <div class="campo">
+            <label for="equipo">Nombre del Equipo*</label>
+            <input type="text" id="equipo" name="equipo" required>
+        </div>
 
-                <div class="campo">
-                    <label for="nombrePrueba">Nombre de la Prueba*</label>
-                    <input type="text" id="nombrePrueba" name="nombrePrueba" required>
-                </div>
+        <div class="campo">
+            <label for="prueba">Nombre de la Prueba*</label>
+            <input type="text" id="prueba" name="prueba" required>
+        </div>
 
-                <div class="campo">
-                    <label for="puntuacion">Puntuación Obtenida*</label>
-                    <input type="number" id="puntuacion" name="puntuacion" required>
-                </div>
+        <div class="campo">
+            <label for="puntuacion">Puntuación Obtenida*</label>
+            <input type="number" step="0.01" id="puntuacion" name="puntuacion" required>
+        </div>
 
-            <div class="boton-central">
-                <button type="submit" class="boton-accion">Guardar</button>
-                <button type="reset" class="boton-accion secundario">Limpiar</button>
-            </div>
-        </form>
+        <div class="boton-central">
+            <button type="submit" class="boton-accion">Guardar</button>
+            <button type="reset" class="boton-accion secundario">Limpiar</button>
+        </div>
+
+    </div>
+</form>
     </div>
 </body>
 </html>

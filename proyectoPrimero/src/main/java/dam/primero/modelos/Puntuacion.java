@@ -7,11 +7,22 @@ public class Puntuacion {
 	private double puntuacion;
 	private String nombreEquipo;
 	private String nombreParticipante;
+	private String nombrePrueba;
+	private String mejorPuntuacion;
 
 	public Puntuacion(int participanteId, int pruebaId, double puntuacion) {
 		this.participanteId = participanteId;
 		this.pruebaId = pruebaId;
 		this.puntuacion = puntuacion;
+	}
+
+	public Puntuacion() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	public String getNombrePrueba() {
+		return nombrePrueba;
 	}
 
 	public int getParticipanteId() {
@@ -52,4 +63,19 @@ public class Puntuacion {
 	public void setNombreParticipante(String nombreParticipante) {
 	    this.nombreParticipante = nombreParticipante;
 	}
+
+	public void setNombrePrueba(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getMejorPuntuacion() {
+		return mejorPuntuacion;
+	}
+
+	public void setMejorPuntuacion(String mejorPuntuacion) {
+		this.mejorPuntuacion = mejorPuntuacion;
+	}
+
+	
 }
