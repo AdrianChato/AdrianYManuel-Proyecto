@@ -1,0 +1,76 @@
+/* Estilos específicos para la página de búsqueda */
+#contenido-busqueda {
+    width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 2px solid #1693a5;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+}
+
+#contenido-busqueda h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #117988;
+    font-size: 24px;
+}
+
+.busqueda {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.busqueda input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #1693a5;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#boton-buscar {
+    padding: 12px 25px;
+    background: #1693a5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+#boton-buscar:hover {
+    background: #117988;
+}
+
+.resultados table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.resultados th, .resultados td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.resultados th {
+    background-color: #1693a5;
+    color: white;
+}
+
+.resultados tr:hover {
+    background-color: rgba(140, 192, 215, 0.2);
+}
+
+.boton-modificar {
+    padding: 8px 16px;
+    background: #1693a5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
